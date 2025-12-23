@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biniam Birhanu - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <a href="#home">Biniam<span class="logo-accent">.dev</span></a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#testimonials">Testimonials</a></li>
+        <li><a href="#blog">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button id="theme-toggle" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <div class="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-content">
+        <h1>Hi, I'm <span class="highlight">Biniam Birhanu</span></h1>
+        <p>Software Engineering Student & Full-Stack Developer</p>
+        <div class="hero-buttons">
+          <a href="#projects" class="cta-btn">View My Work</a>
+          <button onclick="downloadResume()" class="cta-btn outline">Download Resume</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="container">
+        <h2>About Me</h2>
+        <div class="about-content">
+          <div class="about-text">
+            <p>I'm a passionate Software Engineering student at Debre Markos University with a strong foundation in full-stack development. My journey in programming started with curiosity and has evolved into a deep passion for creating innovative digital solutions.</p>
+            <p>Currently pursuing my Bachelor's degree, I've gained hands-on experience in various technologies including Java, React, Node.js, and Python. I enjoy tackling complex problems and turning ideas into functional applications.</p>
+            <p>When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or sharing my learning journey through blog posts. I believe in continuous learning and staying updated with the latest industry trends.</p>
+          </div>
+          <div class="about-stats">
+            <div class="stat-item">
+              <span class="stat-number" data-target="2">0</span>
+              <span class="stat-label">Projects Completed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="12">0</span>
+              <span class="stat-label">Technologies Learned</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="4">0</span>
+              <span class="stat-label">Years of Study</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number" data-target="80">0</span>
+              <span class="stat-label">Academic Performance %</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="skills">
+      <div class="container">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+          <div class="skill-category">
+            <h3>Frontend</h3>
+            <div class="skill-item">
+              <span class="skill-name">HTML5</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="90"></div>
+              </div>
+              <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">CSS3</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">JavaScript</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="80"></div>
+              </div>
+              <span class="skill-percentage">80%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">React</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="75"></div>
+              </div>
+              <span class="skill-percentage">75%</span>
+            </div>
+          </div>
+          
+          <div class="skill-category">
+            <h3>Backend</h3>
+            <div class="skill-item">
+              <span class="skill-name">Java</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Spring Boot</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="75"></div>
+              </div>
+              <span class="skill-percentage">75%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Node.js</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="70"></div>
+              </div>
+              <span class="skill-percentage">70%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Python</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="70"></div>
+              </div>
+              <span class="skill-percentage">70%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Golang</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="65"></div>
+              </div>
+              <span class="skill-percentage">65%</span>
+            </div>
+          </div>
+          
+          <div class="skill-category">
+            <h3>Database & Tools</h3>
+            <div class="skill-item">
+              <span class="skill-name">MySQL</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="80"></div>
+              </div>
+              <span class="skill-percentage">80%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">MongoDB</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="75"></div>
+              </div>
+              <span class="skill-percentage">75%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Git</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="90"></div>
+              </div>
+              <span class="skill-percentage">90%</span>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">REST APIs</span>
+              <div class="skill-bar">
+                <div class="skill-progress" data-width="85"></div>
+              </div>
+              <span class="skill-percentage">85%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="timeline" class="timeline-section">
+      <div class="container">
+        <h2>My Journey</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-year">2021</div>
+            <div class="timeline-content">
+              <h3>Started University</h3>
+              <p>Began Software Engineering at Debre Markos University</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2022</div>
+            <div class="timeline-content">
+              <h3>First Programming Project</h3>
+              <p>Built my first Java application - a simple calculator</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2023</div>
+            <div class="timeline-content">
+              <h3>Web Development Journey</h3>
+              <p>Learned HTML, CSS, JavaScript and built first web projects</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2024</div>
+            <div class="timeline-content">
+              <h3>Full-Stack Development</h3>
+              <p>Mastered React, Node.js and database technologies</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-year">2025</div>
+            <div class="timeline-content">
+              <h3>Portfolio Launch</h3>
+              <p>Created this comprehensive portfolio website</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="projects">
+      <div class="container">
+        <h2>Completed Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-tasks"></i>
+            </div>
+            <div class="project-content">
+              <h3>Todo App with Golang</h3>
+              <p>RESTful API backend for todo management built with Golang, featuring CRUD operations and clean architecture</p>
+              <div class="project-tech">
+                <span>Golang</span>
+                <span>REST API</span>
+                <span>JSON</span>
+              </div>
+              <div class="project-stats">
+                <span><i class="fas fa-star"></i> 4.7</span>
+                <span><i class="fas fa-eye"></i> 198</span>
+                <span><i class="fas fa-code-branch"></i> 5</span>
+              </div>
+              <div class="project-links">
+                <button onclick="openProjectModal('todo-golang')" class="btn-secondary">Details</button>
+                <a href="https://github.com/benjamin-1995" target="_blank" class="btn-primary">Code</a>
+              </div>
+            </div>
+          </div>
+          
+          <div class="project-card">
+            <div class="project-image">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div class="project-content">
+              <h3>Amazon Clone</h3>
+              <p>E-commerce website clone with shopping cart functionality, product listings, and responsive design</p>
+              <div class="project-tech">
+                <span>JavaScript</span>
+                <span>HTML5</span>
+                <span>CSS3</span>
+              </div>
+              <div class="project-stats">
+                <span><i class="fas fa-star"></i> 4.5</span>
+                <span><i class="fas fa-eye"></i> 167</span>
+                <span><i class="fas fa-code-branch"></i> 3</span>
+              </div>
+              <div class="project-links">
+                <button onclick="openProjectModal('amazon-clone')" class="btn-secondary">Details</button>
+                <a href="https://github.com/benjamin-1995" target="_blank" class="btn-primary">Code</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="future-projects" class="future-projects">
+      <div class="container">
+        <h2>Future Projects</h2>
+        <div class="projects-grid">
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-university"></i>
+            </div>
+            <div class="project-content">
+              <h3>University Management System</h3>
+              <p>Comprehensive Java desktop application for managing university operations with MySQL database integration</p>
+              <div class="project-tech">
+                <span>Java</span>
+                <span>MySQL</span>
+                <span>Swing</span>
+              </div>
+              <div class="project-status">Coming Soon</div>
+            </div>
+          </div>
+          
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-server"></i>
+            </div>
+            <div class="project-content">
+              <h3>REST API with Spring Boot</h3>
+              <p>Secure RESTful API with JWT authentication, user management, and comprehensive CRUD operations</p>
+              <div class="project-tech">
+                <span>Spring Boot</span>
+                <span>JWT</span>
+                <span>MySQL</span>
+              </div>
+              <div class="project-status">Planning</div>
+            </div>
+          </div>
+          
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-calculator"></i>
+            </div>
+            <div class="project-content">
+              <h3>Student Grade Calculator</h3>
+              <p>Interactive React web application for GPA calculation with data visualization and progress tracking</p>
+              <div class="project-tech">
+                <span>React</span>
+                <span>Node.js</span>
+                <span>Chart.js</span>
+              </div>
+              <div class="project-status">Planning</div>
+            </div>
+          </div>
+          
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="project-content">
+              <h3>Library Management System</h3>
+              <p>Desktop application for university library with book tracking and student borrowing system</p>
+              <div class="project-tech">
+                <span>Python</span>
+                <span>Tkinter</span>
+                <span>SQLite</span>
+              </div>
+              <div class="project-status">Planning</div>
+            </div>
+          </div>
+          
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-microchip"></i>
+            </div>
+            <div class="project-content">
+              <h3>Microservices Architecture</h3>
+              <p>Distributed system with multiple microservices using Golang for high-performance backend services</p>
+              <div class="project-tech">
+                <span>Golang</span>
+                <span>Docker</span>
+                <span>MongoDB</span>
+              </div>
+              <div class="project-status">Planning</div>
+            </div>
+          </div>
+          
+          <div class="project-card future">
+            <div class="project-image">
+              <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="project-content">
+              <h3>Mobile-First Web App</h3>
+              <p>Progressive Web Application with offline capabilities using modern JavaScript and service workers</p>
+              <div class="project-tech">
+                <span>JavaScript</span>
+                <span>PWA</span>
+                <span>Service Workers</span>
+              </div>
+              <div class="project-status">Planning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <h2>What People Say</h2>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p class="testimonial-text">
+                <span class="short-text">"Biniam is an exceptional student with strong problem-solving skills. His dedication to learning and applying software engineering principles is impressive..."</span>
+                <span class="full-text" style="display: none;">"Biniam is an exceptional student with strong problem-solving skills. His dedication to learning and applying software engineering principles is impressive. He consistently delivers quality work in group projects and shows great initiative in exploring new technologies. His ability to collaborate effectively and mentor fellow students makes him a valuable team member."</span>
+              </p>
+              <button class="read-more-btn" onclick="toggleTestimonial(this)">Read More</button>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-info">
+                <h4>Dr. Alemayehu Tadesse</h4>
+                <span>Software Engineering Professor, Debre Markos University</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p class="testimonial-text">
+                <span class="short-text">"Working with Biniam on our university capstone project was great. He has excellent coding skills and always brings creative solutions..."</span>
+                <span class="full-text" style="display: none;">"Working with Biniam on our university capstone project was great. He has excellent coding skills and always brings creative solutions to technical challenges. A reliable team member who takes ownership of his tasks and helps others when needed. His positive attitude and technical expertise made our project successful."</span>
+              </p>
+              <button class="read-more-btn" onclick="toggleTestimonial(this)">Read More</button>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-info">
+                <h4>Yohannes Mekonnen</h4>
+                <span>Classmate & Project Partner, DMU</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="blog" class="blog">
+      <div class="container">
+        <h2>Latest Blog Posts</h2>
+        <div class="blog-grid">
+          <article class="blog-card">
+            <div class="blog-date">Dec 20, 2024</div>
+            <h3>Getting Started with Java Spring Boot</h3>
+            <div class="blog-content">
+              <p class="short-text">A beginner's guide to building REST APIs with Spring Boot framework and best practices...</p>
+              <div class="full-text" style="display: none;">
+                <p>A beginner's guide to building REST APIs with Spring Boot framework and best practices. In this comprehensive tutorial, I'll walk you through setting up your first Spring Boot project, understanding dependency injection, creating RESTful endpoints, and implementing proper error handling.</p>
+                <p>We'll cover essential topics like Spring Boot starters, auto-configuration, and how to structure your application for scalability. You'll learn to create controllers, services, and repositories following industry best practices.</p>
+                <p>By the end of this guide, you'll have a solid foundation in Spring Boot development and be ready to build production-ready applications.</p>
+              </div>
+            </div>
+            <div class="blog-meta">
+              <span><i class="fas fa-clock"></i> 5 min read</span>
+              <span><i class="fas fa-eye"></i> 234 views</span>
+            </div>
+            <button class="blog-read-more" onclick="toggleBlogContent(this)">Read More</button>
+          </article>
+          
+          <article class="blog-card">
+            <div class="blog-date">Dec 15, 2024</div>
+            <h3>React Hooks: A Junior Developer's Journey</h3>
+            <div class="blog-content">
+              <p class="short-text">My experience learning React hooks and how they simplified my component logic...</p>
+              <div class="full-text" style="display: none;">
+                <p>My experience learning React hooks and how they simplified my component logic. Coming from class components, hooks seemed intimidating at first, but they've revolutionized how I write React applications.</p>
+                <p>I'll share my journey learning useState, useEffect, and custom hooks. You'll discover common pitfalls I encountered and how to avoid them. We'll explore practical examples that demonstrate the power and elegance of hooks.</p>
+                <p>This post includes code examples, best practices, and tips that will help you master React hooks faster than I did.</p>
+              </div>
+            </div>
+            <div class="blog-meta">
+              <span><i class="fas fa-clock"></i> 4 min read</span>
+              <span><i class="fas fa-eye"></i> 189 views</span>
+            </div>
+            <button class="blog-read-more" onclick="toggleBlogContent(this)">Read More</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2>Get In Touch</h2>
+        <div class="contact-content">
+          <div class="contact-info">
+            <h3>Let's Connect</h3>
+            <p>I'm always open to discussing new opportunities, collaborations, or just having a chat about technology.</p>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <span class="contact-label">Email</span>
+                <span class="contact-value">hubbenjamin6@gmail.com</span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-linkedin"></i>
+              <div>
+                <span class="contact-label">LinkedIn</span>
+                <a href="https://www.linkedin.com/in/biniam-birihanu-95ba9b38b/" target="_blank" class="contact-value">Connect with me</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <i class="fab fa-github"></i>
+              <div>
+                <span class="contact-label">GitHub</span>
+                <a href="https://github.com/benjamin-1995" target="_blank" class="contact-value">View my code</a>
+              </div>
+            </div>
+          </div>
+          
+          <form class="contact-form">
+            <h3>Send Message</h3>
+            <input type="text" name="name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Your Email" required>
+            <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit" class="cta-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Biniam Birhanu</h3>
+          <p>Software Engineering Student at Debre Markos University, passionate about creating innovative digital solutions through code.</p>
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/biniam-birihanu-95ba9b38b/" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/benjamin-1995" target="_blank">
+              <i class="fab fa-github"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Services</h4>
+          <ul>
+            <li>Web Development</li>
+            <li>Software Engineering</li>
+            <li>Academic Projects</li>
+            <li>Problem Solving</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h4>Analytics</h4>
+          <div class="footer-stats">
+            <div class="stat">
+              <span class="stat-value" id="visitor-count">151</span>
+              <span class="stat-label">Visitors</span>
+            </div>
+            <div class="stat">
+              <span class="stat-value" id="page-views">0</span>
+              <span class="stat-label">Page Views</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Biniam Birhanu. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Modal -->
+  <div id="project-modal" class="modal">
+    <div class="modal-content">
+      <button class="close" onclick="closeModal()">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
