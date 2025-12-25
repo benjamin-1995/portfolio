@@ -1,127 +1,203 @@
-// Initialize EmailJS
-emailjs.init("Nr1EfhK2pw0g20yt_");
-
-// Global Variables
-let isMenuOpen = false;
-
-// Initialize Portfolio
-document.addEventListener("DOMContentLoaded", function () {
-  setupNavigation();
-  setupThemeToggle();
-  setupAnimations();
-  setupSkills();
-  setupContact();
+// ===== PORTFOLIO INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+  initializePortfolio();
 });
 
-// Navigation
-function setupNavigation() {
-  const navbar = document.querySelector(".navbar");
-  const hamburger = document.querySelector(".hamburger");
-  const navMenu = document.querySelector(".nav-menu");
-  const navLinks = document.querySelectorAll(".nav-menu a");
+function initializePortfolio() {
+  setupLoading();
+  setupNavigation();
+  setupTheme();
+  setupAnimations();
+  setupSkills();
+  setupProjects();
+  setupContact();
+  setupScrollEffects();
+  setupVisitorTracking();
+  setupPerformanceOptimizations();
+}
 
-  // Scroll effect
-  window.addEventListener("scroll", () => {
-    if (window.scrollY > 50) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
+// ===== LOADING SCREEN =====
+function setupLoading() {
+  const loadingScreen = document.getElementById('loading-screen');
+  const progressBar = document.querySelector('.loader-progress');
+  
+  let progress = 0;
+  const interval = setInterval(() => {
+    progress += Math.random() * 15;
+    if (progress > 100) progress = 100;
+    
+    if (progressBar) {
+      progressBar.style.width = progress + '%';
     }
-    updateActiveSection();
-  });
+    
+    if (progress >= 100) {
+      clearInterval(interval);
+      setTimeout(() => {
+        if (loadingScreen) {
+          loadingScreen.style.opacity = '0';
+          setTimeout(() => {
+            loadingScreen.style.display = 'none';
+          }, 500);
+        }
+      }, 500);
+    }
+  }, 100);
+}
+
+// ===== NAVIGATION =====
+function setupNavigation() {
+  const hamburger = document.querySelector('.hamburger');
+  const navMenu = document.querySelector('.nav-menu');
+  const navLinks = document.querySelectorAll('.nav-menu a');
+  const navbar = document.querySelector('.navbar');
 
   // Mobile menu toggle
-  hamburger?.addEventListener("click", () => {
-    hamburger.classList.toggle("active");
-    navMenu.classList.toggle("active");
-    isMenuOpen = !isMenuOpen;
+  hamburger?.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navMenu?.classList.toggle('active');
   });
 
-  // Close menu on link click
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      hamburger?.classList.remove("active");
-      navMenu?.classList.remove("active");
-      isMenuOpen = false;
+  // Close mobile menu on link click
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger?.classList.remove('active');
+      navMenu?.classList.remove('active');
     });
   });
 
-  // Smooth scrolling
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute("href");
-      const targetSection = document.querySelector(targetId);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: "smooth" });
+  // Navbar scroll effect
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 100) {
+      navbar?.classList.add('scrolled');
+    } else {
+      navbar?.classList.remove('scrolled');
+    }
+    
+    // Hide/show navbar on scroll
+    if (window.scrollY > lastScrollY && window.scrollY > 200) {
+      navbar.style.transform = 'translateY(-100%)';
+    } else {
+      navbar.style.transform = 'translateY(0)';
+    }
+    lastScrollY = window.scrollY;
+  });
+
+  // Active section highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${entry.target.id}`) {
+            link.classList.add('active');
+          }
+        });
       }
     });
-  });
+  }, { threshold: 0.3 });
+
+  sections.forEach(section => observer.observe(section));
 }
 
-// Update active section
-function updateActiveSection() {
-  const sections = document.querySelectorAll("section");
-  const navLinks = document.querySelectorAll(".nav-menu a");
-
-  sections.forEach((section) => {
-    const rect = section.getBoundingClientRect();
-    if (rect.top <= 100 && rect.bottom >= 100) {
-      navLinks.forEach((link) => link.classList.remove("active"));
-      const activeLink = document.querySelector(`a[href="#${section.id}"]`);
-      activeLink?.classList.add("active");
-    }
-  });
-}
-
-// Theme Toggle
-function setupThemeToggle() {
-  const themeToggle = document.getElementById("theme-toggle");
-  const body = document.body;
-
-  // Load saved theme
-  const savedTheme = localStorage.getItem("theme") || "light";
-  body.setAttribute("data-theme", savedTheme);
+// ===== THEME SYSTEM =====
+function setupTheme() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  
+  document.documentElement.setAttribute('data-theme', savedTheme);
   updateThemeIcon(savedTheme);
 
-  themeToggle?.addEventListener("click", () => {
-    const currentTheme = body.getAttribute("data-theme");
-    const newTheme = currentTheme === "light" ? "dark" : "light";
-
-    body.setAttribute("data-theme", newTheme);
-    localStorage.setItem("theme", newTheme);
+  themeToggle?.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
     updateThemeIcon(newTheme);
   });
 }
 
 function updateThemeIcon(theme) {
-  const themeIcon = document.querySelector("#theme-toggle i");
+  const themeIcon = document.querySelector('#theme-toggle i');
   if (themeIcon) {
-    themeIcon.className = theme === "light" ? "fas fa-moon" : "fas fa-sun";
+    themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
   }
 }
 
-// Animations
+// ===== SCROLL EFFECTS =====
+function setupScrollEffects() {
+  // Progress bar
+  const progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => {
+    const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    if (progressBar) {
+      progressBar.style.width = scrolled + '%';
+    }
+  });
+
+  // Back to top button
+  const backToTop = document.createElement('button');
+  backToTop.innerHTML = '<i class="fas fa-arrow-up"></i>';
+  backToTop.className = 'back-to-top';
+  backToTop.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-1);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--shadow-lg);
+  `;
+  
+  document.body.appendChild(backToTop);
+  
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backToTop.style.opacity = '1';
+      backToTop.style.visibility = 'visible';
+    } else {
+      backToTop.style.opacity = '0';
+      backToTop.style.visibility = 'hidden';
+    }
+  });
+  
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
+
+// ===== ANIMATIONS =====
 function setupAnimations() {
   animateCounters();
+  setupScrollAnimations();
 }
 
 function animateCounters() {
-  const counters = document.querySelectorAll(".stat-number");
-
+  const counters = document.querySelectorAll('.stat-number');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const counter = entry.target;
-        const target = parseInt(counter.getAttribute("data-target"));
-        const increment = target / 100;
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000;
+        const increment = target / (duration / 16);
         let current = 0;
 
         const updateCounter = () => {
           if (current < target) {
             current += increment;
             counter.textContent = Math.ceil(current);
-            setTimeout(updateCounter, 20);
+            requestAnimationFrame(updateCounter);
           } else {
             counter.textContent = target;
           }
@@ -136,9 +212,29 @@ function animateCounters() {
   counters.forEach((counter) => observer.observe(counter));
 }
 
-// Skills Section
+function setupScrollAnimations() {
+  const animatedElements = document.querySelectorAll('.project-card, .skill-category, .testimonial-card, .blog-card');
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  animatedElements.forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'all 0.6s ease';
+    observer.observe(el);
+  });
+}
+
+// ===== SKILLS SECTION =====
 function setupSkills() {
-  const skillsSection = document.getElementById("skills");
+  const skillsSection = document.getElementById('skills');
   let hasAnimated = false;
 
   const observer = new IntersectionObserver(
@@ -159,260 +255,593 @@ function setupSkills() {
 }
 
 function animateSkillBars() {
-  const skillBars = document.querySelectorAll(".skill-progress");
+  const skillBars = document.querySelectorAll('.skill-progress');
   skillBars.forEach((bar, index) => {
     setTimeout(() => {
-      const width = bar.getAttribute("data-width");
-      bar.style.width = width + "%";
-    }, index * 100);
+      const width = bar.getAttribute('data-width');
+      bar.style.width = width + '%';
+    }, index * 150);
   });
 }
 
-// Project Modal
+// ===== PROJECTS SYSTEM =====
+function setupProjects() {
+  setupProjectFilters();
+  setupProjectModals();
+  setupFutureProjects();
+}
+
+function setupProjectFilters() {
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projectCards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Update active filter
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const filter = btn.getAttribute('data-filter');
+      
+      projectCards.forEach(card => {
+        const category = card.getAttribute('data-category');
+        if (filter === 'all' || category === filter) {
+          card.style.display = 'block';
+          card.style.animation = 'fadeInUp 0.5s ease';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+}
+
+function setupFutureProjects() {
+  const futureCards = document.querySelectorAll('.project-card.future');
+  
+  futureCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const title = card.querySelector('h3').textContent;
+      showNotification(`${title} is coming soon! Stay tuned for updates.`, 'info');
+    });
+    
+    // Add hover effect
+    card.addEventListener('mouseenter', () => {
+      card.style.transform = 'translateY(-5px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+}
+
+function setupProjectModals() {
+  // Close modal when clicking outside
+  window.addEventListener('click', (e) => {
+    const modal = document.getElementById('project-modal');
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  
+  // Close modal with Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  });
+}
+
 function openProjectModal(projectId) {
-  const modal = document.getElementById("project-modal");
-  const modalBody = document.getElementById("modal-body");
+  const modal = document.getElementById('project-modal');
+  const modalBody = document.getElementById('modal-body');
 
   const projects = {
-    "todo-golang": {
-      title: "Todo App with Golang",
-      description: "RESTful API backend for todo management built with Golang, featuring CRUD operations and clean architecture",
-      tech: ["Golang", "REST API", "JSON"],
-      features: ["CRUD Operations", "Clean Architecture", "API Endpoints", "Task Management"],
+    'todo-golang': {
+      title: 'Todo App with Golang',
+      description: 'RESTful API backend for todo management built with Golang, featuring CRUD operations and clean architecture',
+      tech: ['Golang', 'REST API', 'JSON'],
+      features: ['CRUD Operations', 'Clean Architecture', 'API Endpoints', 'Task Management'],
+      github: 'https://github.com/benjamin-1995/todo-golang',
+      demo: null
     },
-    "amazon-clone": {
-      title: "Amazon Clone",
-      description: "E-commerce website clone with shopping cart functionality, product listings, and responsive design",
-      tech: ["JavaScript", "HTML5", "CSS3"],
-      features: ["Product Listings", "Shopping Cart", "Responsive Design", "User Interface"],
+    'amazon-clone': {
+      title: 'Amazon Clone',
+      description: 'E-commerce website clone with shopping cart functionality, product listings, and responsive design',
+      tech: ['JavaScript', 'HTML5', 'CSS3'],
+      features: ['Product Listings', 'Shopping Cart', 'Responsive Design', 'User Interface'],
+      github: 'https://github.com/benjamin-1995/amazon-clone',
+      demo: null
     },
-    "university-system": {
-      title: "University Management System",
-      description: "Comprehensive Java desktop application for managing university operations with MySQL database integration",
-      tech: ["Java", "MySQL", "Swing"],
-      features: ["Student Management", "Course Registration", "Grade Tracking", "Database Integration"],
-    },
-    "spring-api": {
-      title: "REST API with Spring Boot",
-      description: "Secure RESTful API with JWT authentication, user management, and comprehensive CRUD operations",
-      tech: ["Spring Boot", "JWT", "MySQL"],
-      features: ["JWT Authentication", "User Management", "CRUD Operations", "Security Implementation"],
-    },
-    "grade-calculator": {
-      title: "Student Grade Calculator",
-      description: "Interactive React web application for GPA calculation with data visualization and progress tracking",
-      tech: ["React", "Node.js", "Chart.js"],
-      features: ["GPA Calculation", "Data Visualization", "Progress Tracking", "Interactive UI"],
-    },
-    "library-system": {
-      title: "Library Management System",
-      description: "Desktop application for university library with book tracking and student borrowing system",
-      tech: ["Python", "Tkinter", "SQLite"],
-      features: ["Book Management", "Borrowing System", "Student Records", "Search Functionality"],
-    },
-    "microservices": {
-      title: "Microservices Architecture",
-      description: "Distributed system with multiple microservices using Golang for high-performance backend services",
-      tech: ["Golang", "Docker", "MongoDB"],
-      features: ["Microservices Design", "Container Deployment", "API Gateway", "Service Discovery"],
-    },
-    "mobile-web-app": {
-      title: "Mobile-First Web App",
-      description: "Progressive Web Application with offline capabilities using modern JavaScript and service workers",
-      tech: ["JavaScript", "PWA", "Service Workers"],
-      features: ["Offline Support", "Push Notifications", "Responsive Design", "App-like Experience"],
-    },
+    'grade-calculator': {
+      title: 'Student Grade Calculator',
+      description: 'Interactive React web application for GPA calculation with data visualization and progress tracking',
+      tech: ['React', 'CSS3', 'JavaScript'],
+      features: ['GPA Calculation', 'Data Visualization', 'Progress Tracking', 'Interactive UI'],
+      github: 'https://github.com/benjamin-1995/grade-calculator',
+      demo: null
+    }
   };
 
   const project = projects[projectId];
   if (project) {
     modalBody.innerHTML = `
-      <h2>${project.title}</h2>
-      <p>${project.description}</p>
-      <div style="margin: 20px 0;">
-        <h3>Technologies Used</h3>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0;">
-          ${project.tech
-            .map(
-              (tech) =>
-                `<span style="background: var(--surface-color); color: var(--primary-color); padding: 6px 12px; border-radius: 15px; font-size: 12px;">${tech}</span>`
-            )
-            .join("")}
+      <div class="modal-header">
+        <h2>${project.title}</h2>
+        <div class="project-links-modal">
+          ${project.github ? `<a href="${project.github}" class="btn-primary" target="_blank"><i class="fab fa-github"></i> View Code</a>` : ''}
+          ${project.demo ? `<a href="${project.demo}" class="btn-secondary" target="_blank"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
         </div>
       </div>
-      <div style="margin: 20px 0;">
-        <h3>Key Features</h3>
-        <ul>
-          ${project.features.map((feature) => `<li>${feature}</li>`).join("")}
-        </ul>
-      </div>
-      <div style="text-align: right; margin-top: 30px;">
-        <a href="https://github.com/benjamin-1995" class="cta-btn" target="_blank">View Code</a>
-        <button onclick="closeModal()" class="btn-secondary" style="margin-left: 10px;">Close</button>
+      <div class="modal-content-body">
+        <p class="project-description">${project.description}</p>
+        
+        <div class="tech-section">
+          <h3><i class="fas fa-code"></i> Technologies Used</h3>
+          <div class="tech-tags">
+            ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+          </div>
+        </div>
+        
+        <div class="features-section">
+          <h3><i class="fas fa-star"></i> Key Features</h3>
+          <ul class="features-list">
+            ${project.features.map(feature => `<li><i class="fas fa-check"></i> ${feature}</li>`).join('')}
+          </ul>
+        </div>
       </div>
     `;
-    modal.style.display = "block";
+    
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    
+    // Add modal animation
+    const modalContent = modal.querySelector('.modal-content');
+    modalContent.style.animation = 'modalSlideIn 0.3s ease-out';
   }
 }
 
 function closeModal() {
-  const modals = document.querySelectorAll(".modal");
-  modals.forEach((modal) => (modal.style.display = "none"));
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach((modal) => {
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  });
 }
 
-// Contact Form
+// ===== CONTACT SYSTEM =====
 function setupContact() {
-  const contactForm = document.querySelector(".contact-form");
-
-  contactForm?.addEventListener("submit", function (e) {
+  const contactForm = document.querySelector('.contact-form');
+  
+  contactForm?.addEventListener('submit', async function (e) {
     e.preventDefault();
-
-    const name = this.querySelector('input[name="name"]').value;
-    const email = this.querySelector('input[name="email"]').value;
-    const message = this.querySelector('textarea[name="message"]').value;
-
-    if (!name || !email || !message) {
-      alert("Please fill in all fields");
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    
+    // Form validation
+    const name = this.querySelector('input[name="name"]').value.trim();
+    const email = this.querySelector('input[name="email"]').value.trim();
+    const message = this.querySelector('textarea[name="message"]').value.trim();
+    
+    if (!validateForm(name, email, message)) {
       return;
     }
-
-    // EmailJS send
-    emailjs
-      .send("service_9gr1zqb", "template_xyz123", {
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+      // Send email using EmailJS
+      await emailjs.send('service_9gr1zqb', 'template_biniam', {
         from_name: name,
         from_email: email,
         message: message,
-      })
-      .then(() => {
-        alert("Message sent successfully!");
-        this.reset();
-      })
-      .catch(() => {
-        alert("Failed to send message. Please try again.");
+        to_name: 'Biniam Birhanu',
+        reply_to: email
       });
+      
+      showNotification('Message sent successfully! I\'ll get back to you soon.', 'success');
+      this.reset();
+      
+    } catch (error) {
+      console.error('EmailJS Error:', error);
+      showNotification('Failed to send message. Please try again or contact me directly.', 'error');
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
   });
 }
 
-// Download Resume Function
-function downloadResume() {
-  // Create canvas for visual resume
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  canvas.width = 800;
-  canvas.height = 1000;
-  
-  // Background
-  ctx.fillStyle = '#f8f9fa';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-  // Header background
-  const gradient = ctx.createLinearGradient(0, 0, canvas.width, 100);
-  gradient.addColorStop(0, '#667eea');
-  gradient.addColorStop(1, '#764ba2');
-  ctx.fillStyle = gradient;
-  ctx.fillRect(0, 0, canvas.width, 120);
-  
-  // Name
-  ctx.fillStyle = 'white';
-  ctx.font = 'bold 36px Arial';
-  ctx.textAlign = 'center';
-  ctx.fillText('BINIAM BIRHANU', canvas.width/2, 50);
-  
-  // Title
-  ctx.font = '18px Arial';
-  ctx.fillText('Software Engineering Student', canvas.width/2, 80);
-  
-  // Contact Info
-  ctx.fillStyle = '#333';
-  ctx.font = '14px Arial';
-  ctx.textAlign = 'left';
-  ctx.fillText('📧 hubbenjamin6@gmail.com', 50, 160);
-  ctx.fillText('🔗 linkedin.com/in/biniam-birihanu-95ba9b38b/', 50, 180);
-  ctx.fillText('💻 github.com/benjamin-1995', 50, 200);
-  
-  // Education
-  ctx.font = 'bold 20px Arial';
-  ctx.fillText('EDUCATION', 50, 240);
-  ctx.font = '16px Arial';
-  ctx.fillText('Bachelor of Software Engineering', 50, 270);
-  ctx.fillText('Debre Markos University (2021 - Present)', 50, 290);
-  
-  // Skills
-  ctx.font = 'bold 20px Arial';
-  ctx.fillText('TECHNICAL SKILLS', 50, 330);
-  ctx.font = '14px Arial';
-  ctx.fillText('Frontend: HTML5, CSS3, JavaScript, React', 50, 360);
-  ctx.fillText('Backend: Java, Spring Boot, Node.js, Python, Golang', 50, 380);
-  ctx.fillText('Databases: MySQL, MongoDB', 50, 400);
-  ctx.fillText('Tools: Git, REST APIs', 50, 420);
-  
-  // Projects
-  ctx.font = 'bold 20px Arial';
-  ctx.fillText('COMPLETED PROJECTS', 50, 460);
-  ctx.font = '16px Arial';
-  ctx.fillText('1. Todo App with Golang', 50, 490);
-  ctx.font = '12px Arial';
-  ctx.fillText('   RESTful API with CRUD operations', 70, 510);
-  
-  ctx.font = '16px Arial';
-  ctx.fillText('2. Amazon Clone', 50, 540);
-  ctx.font = '12px Arial';
-  ctx.fillText('   E-commerce website with shopping cart', 70, 560);
-  
-  // Achievements
-  ctx.font = 'bold 20px Arial';
-  ctx.fillText('ACHIEVEMENTS', 50, 600);
-  ctx.font = '14px Arial';
-  ctx.fillText('• 2 Projects Completed', 50, 630);
-  ctx.fillText('• 12 Technologies Learned', 50, 650);
-  ctx.fillText('• 4 Years of Study', 50, 670);
-  ctx.fillText('• 80% Academic Performance', 50, 690);
-  
-  // Download
-  canvas.toBlob(function(blob) {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'Biniam_Birhanu_Resume.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  });
-}
-
-// Testimonial Toggle Function
-function toggleTestimonial(button) {
-  const testimonialCard = button.closest('.testimonial-card');
-  const shortText = testimonialCard.querySelector('.short-text');
-  const fullText = testimonialCard.querySelector('.full-text');
-  
-  if (fullText.style.display === 'none') {
-    shortText.style.display = 'none';
-    fullText.style.display = 'inline';
-    button.textContent = 'Read Less';
-  } else {
-    shortText.style.display = 'inline';
-    fullText.style.display = 'none';
-    button.textContent = 'Read More';
+function validateForm(name, email, message) {
+  if (!name) {
+    showNotification('Please enter your name', 'error');
+    return false;
   }
+  
+  if (!email || !isValidEmail(email)) {
+    showNotification('Please enter a valid email address', 'error');
+    return false;
+  }
+  
+  if (!message || message.length < 10) {
+    showNotification('Please enter a message (at least 10 characters)', 'error');
+    return false;
+  }
+  
+  return true;
 }
 
-// Blog Read More Function
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+function showNotification(message, type = 'info') {
+  // Remove existing notifications
+  const existingNotifications = document.querySelectorAll('.notification');
+  existingNotifications.forEach(n => n.remove());
+  
+  const notification = document.createElement('div');
+  notification.className = `notification notification-${type}`;
+  notification.innerHTML = `
+    <div class="notification-content">
+      <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+      <span>${message}</span>
+      <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  `;
+  
+  notification.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow-lg);
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+    max-width: 400px;
+  `;
+  
+  document.body.appendChild(notification);
+  
+  // Auto remove after 5 seconds
+  setTimeout(() => {
+    if (notification.parentElement) {
+      notification.style.animation = 'slideOutRight 0.3s ease';
+      setTimeout(() => notification.remove(), 300);
+    }
+  }, 5000);
+}
+
+// ===== BLOG FUNCTIONALITY =====
 function toggleBlogContent(button) {
   const blogCard = button.closest('.blog-card');
   const shortText = blogCard.querySelector('.short-text');
   const fullText = blogCard.querySelector('.full-text');
   
-  if (fullText.style.display === 'none') {
-    shortText.style.display = 'none';
+  if (fullText.style.display === 'none' || !fullText.style.display) {
     fullText.style.display = 'block';
+    shortText.style.display = 'none';
     button.textContent = 'Read Less';
-    blogCard.style.maxHeight = 'none';
   } else {
-    shortText.style.display = 'block';
     fullText.style.display = 'none';
+    shortText.style.display = 'block';
     button.textContent = 'Read More';
-    blogCard.style.maxHeight = '';
   }
 }
+
+function toggleTestimonial(button) {
+  const testimonialCard = button.closest('.testimonial-card');
+  const shortText = testimonialCard.querySelector('.short-text');
+  const fullText = testimonialCard.querySelector('.full-text');
+  
+  if (fullText.style.display === 'none' || !fullText.style.display) {
+    fullText.style.display = 'inline';
+    shortText.style.display = 'none';
+    button.textContent = 'Read Less';
+  } else {
+    fullText.style.display = 'none';
+    shortText.style.display = 'inline';
+    button.textContent = 'Read More';
+  }
+}
+
+// ===== VISITOR TRACKING =====
+function setupVisitorTracking() {
+  // Simple visitor counter (localStorage based)
+  let visitorCount = localStorage.getItem('visitorCount') || 0;
+  let pageViews = sessionStorage.getItem('pageViews') || 0;
+  
+  // Increment counters
+  if (!sessionStorage.getItem('visited')) {
+    visitorCount++;
+    localStorage.setItem('visitorCount', visitorCount);
+    sessionStorage.setItem('visited', 'true');
+  }
+  
+  pageViews++;
+  sessionStorage.setItem('pageViews', pageViews);
+  
+  // Update display
+  const visitorCountEl = document.getElementById('visitor-count');
+  const pageViewsEl = document.getElementById('page-views');
+  
+  if (visitorCountEl) visitorCountEl.textContent = visitorCount;
+  if (pageViewsEl) pageViewsEl.textContent = pageViews;
+}
+
+// ===== PERFORMANCE OPTIMIZATIONS =====
+function setupPerformanceOptimizations() {
+  // Lazy load images
+  const images = document.querySelectorAll('img[data-src]');
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  
+  images.forEach(img => imageObserver.observe(img));
+  
+  // Preload critical resources
+  const criticalResources = [
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+  ];
+  
+  criticalResources.forEach(resource => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = resource;
+    link.as = 'style';
+    document.head.appendChild(link);
+  });
+}
+
+// ===== RESUME DOWNLOAD =====
+function downloadResume() {
+  showNotification('Generating resume...', 'info');
+  
+  // Create a more comprehensive resume
+  const resumeData = {
+    name: 'BINIAM BIRHANU',
+    title: 'Software Engineering Student',
+    contact: {
+      email: 'hubbenjamin6@gmail.com',
+      linkedin: 'linkedin.com/in/biniam-birihanu-95ba9b38b/',
+      github: 'github.com/benjamin-1995'
+    },
+    education: {
+      degree: 'Bachelor of Software Engineering',
+      university: 'Debre Markos University',
+      period: '2023 - Present'
+    },
+    skills: {
+      frontend: ['HTML5', 'CSS3', 'JavaScript', 'React'],
+      backend: ['Java', 'Node.js', 'Python', 'Golang'],
+      databases: ['MySQL', 'MongoDB'],
+      tools: ['Git', 'REST APIs', 'Docker']
+    },
+    projects: [
+      {
+        name: 'Todo App with Golang',
+        description: 'RESTful API with CRUD operations and clean architecture',
+        tech: ['Golang', 'REST API', 'JSON']
+      },
+      {
+        name: 'Amazon Clone',
+        description: 'E-commerce website with shopping cart and responsive design',
+        tech: ['JavaScript', 'HTML5', 'CSS3']
+      },
+      {
+        name: 'Grade Calculator',
+        description: 'React application for GPA calculation with data visualization',
+        tech: ['React', 'JavaScript', 'CSS3']
+      }
+    ]
+  };
+  
+  // Generate PDF-like content
+  generateResumeHTML(resumeData);
+}
+
+function generateResumeHTML(data) {
+  const resumeHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>${data.name} - Resume</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        .header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; text-align: center; margin: -40px -40px 30px -40px; }
+        .name { font-size: 2.5em; margin: 0; }
+        .title { font-size: 1.2em; margin: 10px 0 0 0; }
+        .section { margin: 30px 0; }
+        .section h2 { color: #333; border-bottom: 2px solid #667eea; padding-bottom: 5px; }
+        .contact-info { display: flex; justify-content: space-around; margin: 20px 0; }
+        .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .project { margin: 15px 0; padding: 15px; border-left: 4px solid #667eea; background: #f8f9fa; }
+        .tech-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+        .tech-tag { background: #667eea; color: white; padding: 4px 8px; border-radius: 12px; font-size: 0.8em; }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <h1 class="name">${data.name}</h1>
+        <p class="title">${data.title}</p>
+      </div>
+      
+      <div class="section">
+        <h2>Contact Information</h2>
+        <div class="contact-info">
+          <div>📧 ${data.contact.email}</div>
+          <div>🔗 ${data.contact.linkedin}</div>
+          <div>💻 ${data.contact.github}</div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>Education</h2>
+        <p><strong>${data.education.degree}</strong><br>
+        ${data.education.university} (${data.education.period})</p>
+      </div>
+      
+      <div class="section">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+          <div><strong>Frontend:</strong> ${data.skills.frontend.join(', ')}</div>
+          <div><strong>Backend:</strong> ${data.skills.backend.join(', ')}</div>
+          <div><strong>Databases:</strong> ${data.skills.databases.join(', ')}</div>
+          <div><strong>Tools:</strong> ${data.skills.tools.join(', ')}</div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>Projects</h2>
+        ${data.projects.map(project => `
+          <div class="project">
+            <h3>${project.name}</h3>
+            <p>${project.description}</p>
+            <div class="tech-tags">
+              ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </body>
+    </html>
+  `;
+  
+  // Create and download the resume
+  const blob = new Blob([resumeHTML], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'Biniam_Birhanu_Resume.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showNotification('Resume downloaded successfully!', 'success');
+}
+
+// ===== UTILITY FUNCTIONS =====
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
+function throttle(func, limit) {
+  let inThrottle;
+  return function() {
+    const args = arguments;
+    const context = this;
+    if (!inThrottle) {
+      func.apply(context, args);
+      inThrottle = true;
+      setTimeout(() => inThrottle = false, limit);
+    }
+  }
+}
+
+// ===== CSS ANIMATIONS =====
+const additionalCSS = `
+  @keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideOutRight {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(100%); opacity: 0; }
+  }
+  
+  .notification-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .notification-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0;
+    margin-left: auto;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+  }
+  
+  .project-links-modal {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .tech-tags {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  
+  .tech-tag {
+    background: var(--gradient-1);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  .features-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .features-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background: var(--surface-color);
+    border-radius: 8px;
+  }
+  
+  .features-list i {
+    color: var(--primary-color);
+  }
+`;
+
+// Add additional CSS to document
+const styleSheet = document.createElement('style');
+styleSheet.textContent = additionalCSS;
+document.head.appendChild(styleSheet);
