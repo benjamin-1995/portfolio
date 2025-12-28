@@ -361,6 +361,14 @@ function openProjectModal(projectId) {
       features: ['GPA Calculation', 'Data Visualization', 'Progress Tracking', 'Interactive UI'],
       github: 'https://github.com/benjamin-1995/grade-calculator',
       demo: null
+    },
+    'chat-app': {
+      title: 'Real-Time Chat Application',
+      description: 'Modern messaging platform with file sharing, group chats, real-time messaging using Socket.io and Node.js',
+      tech: ['React', 'Socket.io', 'Node.js'],
+      features: ['Real-time Messaging', 'Group Chats', 'File Sharing', 'User Authentication'],
+      github: 'https://github.com/benjamin-1995/chat-app',
+      demo: null
     }
   };
 
@@ -649,6 +657,11 @@ function downloadResume() {
         name: 'Grade Calculator',
         description: 'React application for GPA calculation with data visualization',
         tech: ['React', 'JavaScript', 'CSS3']
+      },
+      {
+        name: 'Real-Time Chat App',
+        description: 'Modern messaging platform with real-time communication',
+        tech: ['React', 'Socket.io', 'Node.js']
       }
     ]
   };
